@@ -1,73 +1,122 @@
-# Welcome to your Lovable project
+📧 Email Insight Pro Suite
+Email Insight Pro Suite is a simple and efficient Python project that connects to your email inbox via IMAP, reads emails, and extracts key insights such as sender, subject, and timestamp.
+It is designed to help you easily fetch and process emails for reporting, analysis, or automation purposes.
 
-## Project info
+🛠️ Features
+Connect securely to an email server using IMAP
 
-**URL**: https://lovable.dev/projects/4d315c09-9c05-497d-ae06-2639c601ebec
+Fetch recent emails quickly
 
-## How can I edit this code?
+Extract key fields: From, Subject, Date
 
-There are several ways of editing your application.
+Designed with Python and imap-tools
 
-**Use Lovable**
+Easy to extend for custom automation workflows
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/4d315c09-9c05-497d-ae06-2639c601ebec) and start prompting.
+📦 Tech Stack
+Python 3.8+
 
-Changes made via Lovable will be committed automatically to this repo.
+IMAP Tools Library (imap-tools)
 
-**Use your preferred IDE**
+🚀 Installation
+Clone the Repository
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+bash
+Copy
+Edit
+git clone https://github.com/soumamukherjee27/email-insight-pro-suite.git
+cd email-insight-pro-suite
+Create a Virtual Environment (Optional but Recommended)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+bash
+Copy
+Edit
+python -m venv venv
+source venv/bin/activate   # Linux/macOS
+venv\Scripts\activate      # Windows
+Install the Requirements
 
-Follow these steps:
+bash
+Copy
+Edit
+pip install -r requirements.txt
+If requirements.txt is not available, install manually:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+bash
+Copy
+Edit
+pip install imap-tools
+⚙️ Usage
+Update your email credentials and server details in the script (email.py).
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Example:
 
-# Step 3: Install the necessary dependencies.
-npm i
+python
+Copy
+Edit
+username = "your-email@example.com"
+password = "your-email-password"
+imap_server = "imap.gmail.com"
+Run the Script
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+bash
+Copy
+Edit
+python email.py
+Output will display the latest emails:
 
-**Edit a file directly in GitHub**
+yaml
+Copy
+Edit
+From: John Doe <john.doe@example.com>
+Subject: Meeting Reminder
+Date: 2025-04-20 10:30:00
+🧩 Project Structure
+bash
+Copy
+Edit
+email-insight-pro-suite/
+│
+├── email.py             # Main script to connect and fetch emails
+├── requirements.txt     # Required Python packages
+├── README.md             # Project documentation
+(Will be modularized further soon 🚀)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+📋 Example Output
+sql
+Copy
+Edit
+Fetching emails...
+----------------------------
+From: Alice Smith <alice@example.com>
+Subject: Project Update
+Date: 2025-04-18 14:22:00
+----------------------------
+From: Bob Johnson <bob@example.com>
+Subject: Upcoming Event Details
+Date: 2025-04-17 11:45:00
+----------------------------
+⚠️ Important Notes
+Always keep your email credentials safe — avoid hardcoding them in production.
 
-**Use GitHub Codespaces**
+If using Gmail, you might need to enable IMAP and use an App Password (not your normal password).
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Make sure your email provider supports IMAP access.
 
-## What technologies are used for this project?
+📈 Future Enhancements
+Modularize code (split into multiple Python files)
 
-This project is built with:
+Add logging and error handling
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Support reading attachments
 
-## How can I deploy this project?
+Save fetched emails into CSV/JSON
 
-Simply open [Lovable](https://lovable.dev/projects/4d315c09-9c05-497d-ae06-2639c601ebec) and click on Share -> Publish.
+Dockerize the application for deployment
 
-## Can I connect a custom domain to my Lovable project?
+🤝 Contributing
+Pull requests are welcome!
+If you find a bug or want a feature added, feel free to open an issue or submit a PR.
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+📄 License
+This project is licensed under the MIT License.
