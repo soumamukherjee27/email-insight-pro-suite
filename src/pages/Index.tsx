@@ -1,15 +1,37 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Check, Mail, FileText, MapPin, LineChart, Search, Globe, Code, ShieldCheck, BellRing } from "lucide-react";
+import { Check, Mail, FileText, MapPin, BellRing, Code } from "lucide-react";
 
 const Index = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
+
+      {/* Prototype Notice Section */}
+      <section className="bg-black text-white py-6 px-4 border-b border-green-600">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+          <div>
+            <h2 className="text-xl font-bold text-green-400 mb-1">🚧 Prototype in Progress</h2>
+            <p className="max-w-3xl text-sm md:text-base text-green-300">
+              This website is an evolving prototype from <b>BackBenchers Club</b>, focused on empowering professionals who embrace vibe coding and love technology, AI, and cloud infrastructure. We welcome all visitors to explore, contribute, and help us grow with feedback and ideas.
+            </p>
+            <p className="max-w-3xl mt-1 text-sm md:text-base text-green-300">
+              BackBenchers Club thrives on community collaboration — join us in the Community tab to share suggestions, discuss upcoming features, and build powerful tools together.
+            </p>
+          </div>
+          <div>
+            <Link
+              to="/community"
+              className="inline-block bg-green-600 hover:bg-green-700 transition-colors text-white px-5 py-3 rounded-lg font-semibold shadow-md"
+            >
+              Join the Community
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <main className="flex-1">
         {/* Hero Section */}
@@ -17,8 +39,8 @@ const Index = () => {
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="flex-1 space-y-6">
-                <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-                  Supercharge Your <span className="gradient-text">Email Workflow</span>
+                <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight gradient-text">
+                  Supercharge Your <span> Email Workflow</span>
                 </h1>
                 <p className="text-xl text-muted-foreground">
                   Verify, compose, track, and analyze emails with <b>BackBench Mail</b>. Powered by AI and Python's Beautiful Soup for advanced web extraction.
