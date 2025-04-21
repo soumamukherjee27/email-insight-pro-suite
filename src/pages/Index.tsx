@@ -1,9 +1,10 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Check, Mail, FileText, MapPin, LineChart, Search } from "lucide-react";
+import { Check, Mail, FileText, MapPin, LineChart, Search, Globe, Code, ShieldCheck, BellRing } from "lucide-react";
 
 const Index = () => {
   return (
@@ -20,7 +21,7 @@ const Index = () => {
                   Supercharge Your <span className="gradient-text">Email Workflow</span>
                 </h1>
                 <p className="text-xl text-muted-foreground">
-                  Verify, compose, track, and analyze emails with <b>BackBench Mail</b>. Perfect for professionals and teams — now powered by the BackBencher Club community.
+                  Verify, compose, track, and analyze emails with <b>BackBench Mail</b>. Powered by AI and Python's Beautiful Soup for advanced web extraction.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button size="lg" asChild>
@@ -42,7 +43,7 @@ const Index = () => {
                       <Mail className="h-6 w-6 text-email-primary" />
                       <div>
                         <p className="text-sm font-medium">Email Verification</p>
-                        <p className="text-xs text-muted-foreground">Check if an email is active</p>
+                        <p className="text-xs text-muted-foreground">Check if an email is active and secure</p>
                       </div>
                       <div className="ml-auto w-2 h-2 rounded-full bg-green-500 animate-pulse-light"></div>
                     </div>
@@ -54,24 +55,24 @@ const Index = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-3 p-3 rounded-lg border border-border">
-                      <LineChart className="h-6 w-6 text-email-primary" />
+                      <BellRing className="h-6 w-6 text-email-primary" />
                       <div>
-                        <p className="text-sm font-medium">Email Tracking</p>
-                        <p className="text-xs text-muted-foreground">Monitor open rates and more</p>
+                        <p className="text-sm font-medium">Real-Time Tracking</p>
+                        <p className="text-xs text-muted-foreground">Get notified when emails are opened</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 p-3 rounded-lg border border-border">
                       <MapPin className="h-6 w-6 text-email-primary" />
                       <div>
                         <p className="text-sm font-medium">IP Lookup</p>
-                        <p className="text-xs text-muted-foreground">Locate email origins</p>
+                        <p className="text-xs text-muted-foreground">Locate precise email origins with pincode</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 p-3 rounded-lg border border-border">
-                      <Search className="h-6 w-6 text-email-primary" />
+                      <Code className="h-6 w-6 text-email-primary" />
                       <div>
-                        <p className="text-sm font-medium">Email Extraction</p>
-                        <p className="text-xs text-muted-foreground">Find targeted email addresses</p>
+                        <p className="text-sm font-medium">Beautiful Soup Web Extraction</p>
+                        <p className="text-xs text-muted-foreground">Powerful web scraping capabilities</p>
                       </div>
                     </div>
                   </div>
@@ -85,20 +86,20 @@ const Index = () => {
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">All-in-One Email Toolkit</h2>
+              <h2 className="text-3xl font-bold mb-4">All-in-One Email & Web Data Toolkit</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Powerful tools designed to improve productivity and insight for your email communications.
+                Powerful Python-powered tools designed to improve productivity and provide deep insights for your email and web research.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="feature-card">
                 <div className="feature-icon">
-                  <Mail className="h-6 w-6" />
+                  <ShieldCheck className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Email Verification</h3>
+                <h3 className="text-xl font-semibold mb-2">Advanced Email Verification</h3>
                 <p className="text-muted-foreground">
-                  Instantly check if an email address is valid and active before sending your message.
+                  Instantly check if an email address is valid, when it was last active, and if it's been involved in data breaches.
                 </p>
                 <Link to="/verify" className="mt-4 inline-block text-email-primary hover:underline">
                   Learn more →
@@ -120,11 +121,11 @@ const Index = () => {
 
               <div className="feature-card">
                 <div className="feature-icon">
-                  <LineChart className="h-6 w-6" />
+                  <BellRing className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Email Tracking</h3>
+                <h3 className="text-xl font-semibold mb-2">Real-Time Email Tracking</h3>
                 <p className="text-muted-foreground">
-                  Monitor when your emails are opened and track delivery status in real-time.
+                  Get instant notifications when your emails are opened, with device and location details.
                 </p>
                 <Link to="/track" className="mt-4 inline-block text-email-primary hover:underline">
                   Learn more →
@@ -135,9 +136,9 @@ const Index = () => {
                 <div className="feature-icon">
                   <MapPin className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">IP Lookup</h3>
+                <h3 className="text-xl font-semibold mb-2">Precise IP Lookup</h3>
                 <p className="text-muted-foreground">
-                  Determine the geographical location of email senders by their IP address.
+                  Trace email origins down to the pincode/zip level with our advanced geolocation system.
                 </p>
                 <Link to="/lookup" className="mt-4 inline-block text-email-primary hover:underline">
                   Learn more →
@@ -146,11 +147,11 @@ const Index = () => {
 
               <div className="feature-card">
                 <div className="feature-icon">
-                  <Search className="h-6 w-6" />
+                  <Code className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Email Extraction</h3>
+                <h3 className="text-xl font-semibold mb-2">Beautiful Soup Web Extraction</h3>
                 <p className="text-muted-foreground">
-                  Find targeted email addresses from companies and organizations with our powerful search tools.
+                  Extract targeted data from websites using Python's Beautiful Soup with our powerful web scraping tools.
                 </p>
                 <Link to="/extract" className="mt-4 inline-block text-email-primary hover:underline">
                   Learn more →
@@ -159,13 +160,13 @@ const Index = () => {
 
               <div className="feature-card">
                 <div className="feature-icon">
-                  <Check className="h-6 w-6" />
+                  <Globe className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Usage Analytics</h3>
+                <h3 className="text-xl font-semibold mb-2">BackBencher Community</h3>
                 <p className="text-muted-foreground">
-                  Track your usage and get insights on how to optimize your email campaigns.
+                  Join our community of professionals and developers to share insights and techniques.
                 </p>
-                <Link to="/analytics" className="mt-4 inline-block text-email-primary hover:underline">
+                <Link to="/community" className="mt-4 inline-block text-email-primary hover:underline">
                   Learn more →
                 </Link>
               </div>
@@ -173,8 +174,75 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Beautiful Soup Highlight Section */}
+        <section className="py-16 bg-email-accent/20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl font-bold mb-4">Powered by Beautiful Soup</h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Harness the power of Python's premier web scraping library for professional-grade data extraction
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                <div className="bg-background p-6 rounded-xl border border-border shadow-sm">
+                  <h3 className="text-xl font-semibold mb-4">Web Extraction Features</h3>
+                  <ul className="space-y-3">
+                    <li className="flex">
+                      <Check className="h-5 w-5 text-email-primary mr-2 flex-shrink-0" />
+                      <span>Extract structured data from any website</span>
+                    </li>
+                    <li className="flex">
+                      <Check className="h-5 w-5 text-email-primary mr-2 flex-shrink-0" />
+                      <span>Automatically detect and extract contact information</span>
+                    </li>
+                    <li className="flex">
+                      <Check className="h-5 w-5 text-email-primary mr-2 flex-shrink-0" />
+                      <span>Find hidden emails in JavaScript and metadata</span>
+                    </li>
+                    <li className="flex">
+                      <Check className="h-5 w-5 text-email-primary mr-2 flex-shrink-0" />
+                      <span>Export data in CSV, JSON, or Excel formats</span>
+                    </li>
+                    <li className="flex">
+                      <Check className="h-5 w-5 text-email-primary mr-2 flex-shrink-0" />
+                      <span>Set custom extraction rules and patterns</span>
+                    </li>
+                  </ul>
+                  <Button className="mt-6" asChild>
+                    <Link to="/extract">Try Web Extraction</Link>
+                  </Button>
+                </div>
+                
+                <div className="bg-background p-6 rounded-xl border border-border shadow-sm">
+                  <h3 className="text-xl font-semibold mb-4">Use Cases</h3>
+                  <div className="space-y-4">
+                    <div className="p-3 bg-muted rounded-lg">
+                      <h4 className="font-medium mb-1">Lead Generation</h4>
+                      <p className="text-sm text-muted-foreground">Find prospect emails from company websites and directories</p>
+                    </div>
+                    <div className="p-3 bg-muted rounded-lg">
+                      <h4 className="font-medium mb-1">Competitive Analysis</h4>
+                      <p className="text-sm text-muted-foreground">Extract structured data from competitor websites</p>
+                    </div>
+                    <div className="p-3 bg-muted rounded-lg">
+                      <h4 className="font-medium mb-1">Content Research</h4>
+                      <p className="text-sm text-muted-foreground">Gather information from multiple sources automatically</p>
+                    </div>
+                    <div className="p-3 bg-muted rounded-lg">
+                      <h4 className="font-medium mb-1">Contact Discovery</h4>
+                      <p className="text-sm text-muted-foreground">Find decision-makers and their contact details</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Pricing Section */}
-        <section className="py-16 bg-email-accent">
+        <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">Simple, Transparent Pricing</h2>
@@ -208,7 +276,7 @@ const Index = () => {
                   </li>
                   <li className="plan-feature">
                     <Check className="h-4 w-4 text-email-secondary" />
-                    <span>Basic email tracking</span>
+                    <span>Basic web extraction</span>
                   </li>
                 </ul>
                 <Button className="w-full" variant="outline">
@@ -239,15 +307,15 @@ const Index = () => {
                   </li>
                   <li className="plan-feature">
                     <Check className="h-4 w-4 text-email-secondary" />
-                    <span>Unlimited IP lookups</span>
+                    <span>Unlimited IP lookups with city precision</span>
                   </li>
                   <li className="plan-feature">
                     <Check className="h-4 w-4 text-email-secondary" />
-                    <span>Advanced email tracking</span>
+                    <span>Real-time email open notifications</span>
                   </li>
                   <li className="plan-feature">
                     <Check className="h-4 w-4 text-email-secondary" />
-                    <span>100 email extractions/day</span>
+                    <span>Advanced Beautiful Soup extraction</span>
                   </li>
                 </ul>
                 <Button className="w-full">
@@ -275,15 +343,15 @@ const Index = () => {
                   </li>
                   <li className="plan-feature">
                     <Check className="h-4 w-4 text-email-secondary" />
-                    <span>Unlimited IP lookups</span>
+                    <span>Unlimited IP lookups with pincode precision</span>
                   </li>
                   <li className="plan-feature">
                     <Check className="h-4 w-4 text-email-secondary" />
-                    <span>Premium email tracking</span>
+                    <span>Premium tracking & analytics</span>
                   </li>
                   <li className="plan-feature">
                     <Check className="h-4 w-4 text-email-secondary" />
-                    <span>Unlimited email extractions</span>
+                    <span>Custom Beautiful Soup extraction rules</span>
                   </li>
                   <li className="plan-feature">
                     <Check className="h-4 w-4 text-email-secondary" />
@@ -304,7 +372,7 @@ const Index = () => {
             <div className="bg-email-primary rounded-2xl p-8 md:p-12 text-white text-center">
               <h2 className="text-3xl font-bold mb-4">Ready to supercharge your email workflow?</h2>
               <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
-                Join thousands of professionals using Email Insight Pro to improve their email productivity.
+                Join the BackBencher Club community using BackBench Mail to improve their email productivity and web research.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="bg-white text-email-primary hover:bg-gray-100">

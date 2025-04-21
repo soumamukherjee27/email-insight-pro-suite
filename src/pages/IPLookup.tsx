@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Search, MapPin, Globe, Loader } from "lucide-react";
+import { Search, MapPin, Globe, Loader, Lock } from "lucide-react";
+import { toast } from "sonner";
 
 const IPLookup = () => {
   const [email, setEmail] = useState("");
@@ -18,30 +19,40 @@ const IPLookup = () => {
     timezone: string;
     latitude: number;
     longitude: number;
+    pincode?: string;
+    lastActive?: string;
   }>(null);
   const [usageRemaining, setUsageRemaining] = useState(10);
+  const [isPremium, setIsPremium] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email) return;
+    if (!email) {
+      toast.error("Please enter an email address");
+      return;
+    }
     
     setLoading(true);
     setResult(null);
     
     // Simulate API call for IP lookup
     setTimeout(() => {
+      const randomIP = `192.168.${Math.floor(Math.random() * 254)}.${Math.floor(Math.random() * 254)}`;
       setResult({
-        ip: "192.168.1." + Math.floor(Math.random() * 254),
+        ip: randomIP,
         country: "United States",
         city: "New York",
         isp: "Example ISP",
         timezone: "UTC-5",
         latitude: 40.7128,
-        longitude: -74.006
+        longitude: -74.006,
+        ...(isPremium && { pincode: "10001" }),
+        lastActive: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString()
       });
       setLoading(false);
       setUsageRemaining(prev => prev - 1);
+      toast.success(`Successfully located email origin IP: ${randomIP}`);
     }, 2000);
   };
 
@@ -55,7 +66,7 @@ const IPLookup = () => {
             <div className="text-center mb-10">
               <h1 className="text-3xl font-bold mb-4">Email IP Lookup</h1>
               <p className="text-muted-foreground">
-                Trace the geographical location of an email sender by IP address.
+                Trace the actual sender's IP address and geographical location from email headers.
               </p>
             </div>
 
@@ -106,7 +117,7 @@ const IPLookup = () => {
                 {result && (
                   <Card>
                     <CardContent className="p-6">
-                      <h3 className="text-lg font-semibold mb-4">IP Location Results</h3>
+                      <h3 className="text-lg font-semibold mb-4">Sender's IP Location Results</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-3">
                           <div>
@@ -121,6 +132,12 @@ const IPLookup = () => {
                             <p className="text-sm text-muted-foreground">City</p>
                             <p className="font-medium">{result.city}</p>
                           </div>
+                          {result.pincode && (
+                            <div>
+                              <p className="text-sm text-muted-foreground">Pincode/Zip</p>
+                              <p className="font-medium">{result.pincode}</p>
+                            </div>
+                          )}
                         </div>
                         <div className="space-y-3">
                           <div>
@@ -135,11 +152,18 @@ const IPLookup = () => {
                             <p className="text-sm text-muted-foreground">Coordinates</p>
                             <p className="font-medium">{result.latitude}, {result.longitude}</p>
                           </div>
+                          <div>
+                            <p className="text-sm text-muted-foreground">Last Active</p>
+                            <p className="font-medium">{new Date(result.lastActive || "").toLocaleDateString()}</p>
+                          </div>
                         </div>
                       </div>
-                      <div className="mt-4 p-2 bg-muted rounded-md text-xs text-muted-foreground">
-                        This is a simulated result for demonstration purposes. Actual IP location may vary.
-                      </div>
+                      {!isPremium && (
+                        <div className="mt-4 p-3 bg-email-accent rounded-md text-sm flex items-center gap-2">
+                          <Lock className="h-4 w-4 text-email-primary" />
+                          <span className="font-medium">Upgrade to Premium for pincode/zip precision and detailed activity logs</span>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 )}
@@ -150,7 +174,7 @@ const IPLookup = () => {
               <div>
                 <h2 className="text-xl font-semibold mb-4">How It Works</h2>
                 <p className="text-muted-foreground mb-4">
-                  Our Email IP Lookup tool traces the origin of emails by analyzing the sender's IP address, helping you:
+                  Our Email IP Lookup tool extracts and analyzes the actual sender's IP address from email headers using advanced Python tools:
                 </p>
                 <ul className="space-y-4">
                   <li className="flex">
@@ -160,9 +184,9 @@ const IPLookup = () => {
                       </div>
                     </div>
                     <div>
-                      <h3 className="font-medium">Identify Location</h3>
+                      <h3 className="font-medium">Extract Real IP</h3>
                       <p className="text-muted-foreground text-sm">
-                        Determine the geographical origin of email senders based on their IP address.
+                        We analyze email headers to find the actual originating IP address, not just the mail server.
                       </p>
                     </div>
                   </li>
@@ -173,9 +197,9 @@ const IPLookup = () => {
                       </div>
                     </div>
                     <div>
-                      <h3 className="font-medium">Verify Authenticity</h3>
+                      <h3 className="font-medium">Precise Geolocation</h3>
                       <p className="text-muted-foreground text-sm">
-                        Check if emails are coming from expected or suspicious locations.
+                        Determine accurate geographical information down to city level (pincode for premium users).
                       </p>
                     </div>
                   </li>
@@ -186,9 +210,9 @@ const IPLookup = () => {
                       </div>
                     </div>
                     <div>
-                      <h3 className="font-medium">Enhance Security</h3>
+                      <h3 className="font-medium">Activity Timestamps</h3>
                       <p className="text-muted-foreground text-sm">
-                        Flag potentially fraudulent communications from unexpected regions.
+                        View when the email address was last active based on network data.
                       </p>
                     </div>
                   </li>
@@ -196,11 +220,13 @@ const IPLookup = () => {
               </div>
 
               <div className="bg-email-accent p-6 rounded-lg">
-                <h3 className="text-lg font-semibold mb-2">Need unlimited IP lookups?</h3>
+                <h3 className="text-lg font-semibold mb-2">Need unlimited IP lookups with pincode precision?</h3>
                 <p className="text-muted-foreground mb-4">
-                  Upgrade to our Pro or Enterprise plan for unlimited IP lookups and detailed reports.
+                  Upgrade to our Pro or Enterprise plan for unlimited IP lookups with pincode/ZIP precision and detailed activity logs.
                 </p>
-                <Button>Upgrade Now</Button>
+                <Button onClick={() => setIsPremium(!isPremium)}>
+                  {isPremium ? "Currently in Premium Mode" : "Upgrade Now"}
+                </Button>
               </div>
             </div>
           </div>

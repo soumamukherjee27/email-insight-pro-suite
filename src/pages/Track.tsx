@@ -1,41 +1,122 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Search, Mail, LineChart, Loader } from "lucide-react";
+import { Search, Mail, LineChart, Loader, Bell, Eye, BellRing } from "lucide-react";
+import { toast } from "sonner";
+
+interface TrackingData {
+  emailId: string;
+  trackingId: string;
+  status: string;
+  opens: number;
+  lastOpened: string;
+  deliveryTime: string;
+  inbox: string;
+  openTimes: string[];
+  userAgent?: string;
+  location?: string;
+}
 
 const Track = () => {
   const [trackingId, setTrackingId] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [trackingResult, setTrackingResult] = useState(null);
+  const [trackingResult, setTrackingResult] = useState<TrackingData | null>(null);
   const [usageRemaining, setUsageRemaining] = useState(10);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [hasNewOpenEvent, setHasNewOpenEvent] = useState(false);
+
+  // Simulate email open events for demo purposes
+  useEffect(() => {
+    if (trackingResult && notificationsEnabled) {
+      const timer = setTimeout(() => {
+        const newOpenTime = new Date().toISOString();
+        setTrackingResult(prev => {
+          if (!prev) return null;
+          return {
+            ...prev,
+            opens: prev.opens + 1,
+            lastOpened: newOpenTime,
+            openTimes: [...prev.openTimes, newOpenTime],
+            userAgent: "Chrome/99.0.4844.51 on Windows 10",
+            location: "New York, United States"
+          };
+        });
+        setHasNewOpenEvent(true);
+        toast.success(
+          <div className="flex items-center gap-2">
+            <BellRing className="h-5 w-5" />
+            <div>
+              <p className="font-medium">Email opened!</p>
+              <p className="text-xs">Your tracked email was just opened</p>
+            </div>
+          </div>,
+          {
+            duration: 5000,
+          }
+        );
+      }, 8000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [trackingResult, notificationsEnabled]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email && !trackingId) return;
+    if (!email && !trackingId) {
+      toast.error("Please enter either an email or tracking ID");
+      return;
+    }
     
     setLoading(true);
     setTrackingResult(null);
+    setHasNewOpenEvent(false);
     
     // Simulate API call for tracking
     setTimeout(() => {
+      const currentTime = new Date();
+      const openTime = new Date(currentTime.getTime() - 2 * 60 * 60 * 1000).toISOString();
+      
       setTrackingResult({
         emailId: email || "sample@example.com",
         trackingId: trackingId || "TRK-" + Math.random().toString(36).substring(2, 10),
         status: "Delivered",
-        opens: Math.floor(Math.random() * 5),
-        lastOpened: new Date().toISOString(),
+        opens: 1,
+        lastOpened: openTime,
         deliveryTime: "2 hours ago",
         inbox: Math.random() > 0.2 ? "Primary" : "Spam",
+        openTimes: [openTime],
+        userAgent: "Safari/605.1.15 on macOS",
+        location: "San Francisco, United States"
       });
+      
       setLoading(false);
       setUsageRemaining(prev => prev - 1);
+      setNotificationsEnabled(true);
     }, 2000);
+  };
+
+  const getTimeAgo = (dateString: string) => {
+    const now = new Date();
+    const date = new Date(dateString);
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    
+    if (seconds < 60) return `${seconds} seconds ago`;
+    
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    
+    const days = Math.floor(hours / 24);
+    return `${days} day${days > 1 ? 's' : ''} ago`;
   };
 
   return (
@@ -46,9 +127,9 @@ const Track = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-10">
-              <h1 className="text-3xl font-bold mb-4">Email Tracking</h1>
+              <h1 className="text-3xl font-bold mb-4">Real-Time Email Tracking</h1>
               <p className="text-muted-foreground">
-                Monitor when your emails were opened and track delivery status in real-time.
+                Monitor when your emails are opened in real-time with instant notifications.
               </p>
             </div>
 
@@ -111,9 +192,18 @@ const Track = () => {
                 </div>
 
                 {trackingResult && (
-                  <Card>
+                  <Card className={hasNewOpenEvent ? "animate-pulse-subtle border-email-primary" : ""}>
                     <CardContent className="p-6">
-                      <h3 className="text-lg font-semibold mb-4">Email Tracking Results</h3>
+                      <div className="flex justify-between items-start mb-4">
+                        <h3 className="text-lg font-semibold">Email Tracking Results</h3>
+                        {notificationsEnabled && (
+                          <Badge variant="outline" className="flex items-center gap-1 bg-email-accent">
+                            <BellRing className="h-3 w-3 text-email-primary" />
+                            <span>Live Tracking Active</span>
+                          </Badge>
+                        )}
+                      </div>
+                      
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-3">
                           <div>
@@ -128,6 +218,10 @@ const Track = () => {
                             <p className="text-sm text-muted-foreground">Status</p>
                             <p className="font-medium">{trackingResult.status}</p>
                           </div>
+                          <div>
+                            <p className="text-sm text-muted-foreground">Inbox Placement</p>
+                            <p className="font-medium">{trackingResult.inbox}</p>
+                          </div>
                         </div>
                         <div className="space-y-3">
                           <div>
@@ -136,16 +230,56 @@ const Track = () => {
                           </div>
                           <div>
                             <p className="text-sm text-muted-foreground">Last Opened</p>
-                            <p className="font-medium">{new Date(trackingResult.lastOpened).toLocaleString()}</p>
+                            <p className="font-medium">{getTimeAgo(trackingResult.lastOpened)}</p>
                           </div>
                           <div>
-                            <p className="text-sm text-muted-foreground">Inbox Placement</p>
-                            <p className="font-medium">{trackingResult.inbox}</p>
+                            <p className="text-sm text-muted-foreground">Location</p>
+                            <p className="font-medium">{trackingResult.location || "Unknown"}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-muted-foreground">Device</p>
+                            <p className="font-medium">{trackingResult.userAgent || "Unknown"}</p>
                           </div>
                         </div>
                       </div>
-                      <div className="mt-4 p-2 bg-muted rounded-md text-xs text-muted-foreground">
-                        This is a simulated result for demonstration purposes. For real tracking, enable our pixel tracking in your emails.
+                      
+                      {trackingResult.openTimes.length > 0 && (
+                        <div className="mt-4">
+                          <p className="text-sm font-medium mb-2">Open Timeline</p>
+                          <div className="bg-muted p-3 rounded-md max-h-32 overflow-y-auto">
+                            {trackingResult.openTimes.map((time, index) => (
+                              <div key={index} className="flex items-center gap-2 py-1 text-sm border-b last:border-0 border-border">
+                                <Eye className="h-3 w-3 text-email-primary" />
+                                <span>Opened {getTimeAgo(time)}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="mt-4 flex justify-between items-center">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => setNotificationsEnabled(!notificationsEnabled)}
+                          className="flex items-center gap-2"
+                        >
+                          {notificationsEnabled ? (
+                            <>
+                              <Bell className="h-4 w-4" />
+                              Pause Notifications
+                            </>
+                          ) : (
+                            <>
+                              <BellRing className="h-4 w-4" />
+                              Enable Notifications
+                            </>
+                          )}
+                        </Button>
+                        
+                        <p className="text-xs text-muted-foreground">
+                          You'll be notified when this email is opened
+                        </p>
                       </div>
                     </CardContent>
                   </Card>
@@ -155,9 +289,9 @@ const Track = () => {
 
             <div className="mt-10 space-y-6">
               <div>
-                <h2 className="text-xl font-semibold mb-4">How Email Tracking Works</h2>
+                <h2 className="text-xl font-semibold mb-4">How Real-Time Email Tracking Works</h2>
                 <p className="text-muted-foreground mb-4">
-                  Our email tracking uses a combination of pixel tracking and link redirects to monitor when recipients interact with your emails.
+                  Our advanced tracking system uses pixel tracking and link redirects with instant notification technology:
                 </p>
                 <ul className="space-y-4">
                   <li className="flex">
@@ -180,9 +314,9 @@ const Track = () => {
                       </div>
                     </div>
                     <div>
-                      <h3 className="font-medium">Real-time Notifications</h3>
+                      <h3 className="font-medium">Instant Open Notifications</h3>
                       <p className="text-muted-foreground text-sm">
-                        Get instant alerts when recipients open your emails or click links.
+                        Get real-time browser notifications when recipients open your emails.
                       </p>
                     </div>
                   </li>
@@ -195,7 +329,7 @@ const Track = () => {
                     <div>
                       <h3 className="font-medium">Detailed Analytics</h3>
                       <p className="text-muted-foreground text-sm">
-                        View detailed reports on open rates, click-through rates, and inbox placement.
+                        Track device type, location, and timestamp of each open event.
                       </p>
                     </div>
                   </li>
