@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +8,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Search, Link, FileText, Loader, Download, Globe, Code, MapPin, Mail } from "lucide-react";
 import { toast } from "sonner";
+import ExtractEmailsForm from "@/components/extract/ExtractEmailsForm";
+import ExtractScraperForm from "@/components/extract/ExtractScraperForm";
 
 interface ExtractedEmail {
   email: string;
@@ -26,14 +27,14 @@ interface ScrapedData {
 }
 
 const Extract = () => {
-  const [url, setUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [extractedEmails, setExtractedEmails] = useState<ExtractedEmail[]>([]);
-  const [scrapedData, setScrapedData] = useState<ScrapedData[]>([]);
-  const [usageRemaining, setUsageRemaining] = useState(100);
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [activeTab, setActiveTab] = useState("emails");
-  const [scrapeTarget, setScrapeTarget] = useState<"all" | "emails" | "links" | "phones" | "addresses">("all");
+  const [url, setUrl] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const [extractedEmails, setExtractedEmails] = React.useState<ExtractedEmail[]>([]);
+  const [scrapedData, setScrapedData] = React.useState<ScrapedData[]>([]);
+  const [usageRemaining, setUsageRemaining] = React.useState(100);
+  const [loadingProgress, setLoadingProgress] = React.useState(0);
+  const [activeTab, setActiveTab] = React.useState("emails");
+  const [scrapeTarget, setScrapeTarget] = React.useState<"all" | "emails" | "links" | "phones" | "addresses">("all");
 
   const getExtractionCount = () => {
     const base = Math.floor(Math.random() * 21) + 30;
@@ -78,7 +79,6 @@ const Extract = () => {
   const generateScrapeData = (domain: string): ScrapedData[] => {
     const data: ScrapedData[] = [];
     
-    // Add some emails
     if (scrapeTarget === "all" || scrapeTarget === "emails") {
       for (let i = 0; i < 5; i++) {
         data.push({
@@ -90,7 +90,6 @@ const Extract = () => {
       }
     }
     
-    // Add some links
     if (scrapeTarget === "all" || scrapeTarget === "links") {
       const paths = ["about", "services", "blog", "team", "careers", "contact"];
       for (let i = 0; i < 6; i++) {
@@ -103,7 +102,6 @@ const Extract = () => {
       }
     }
     
-    // Add some phone numbers
     if (scrapeTarget === "all" || scrapeTarget === "phones") {
       data.push({
         type: "Phone",
@@ -119,7 +117,6 @@ const Extract = () => {
       });
     }
     
-    // Add some addresses
     if (scrapeTarget === "all" || scrapeTarget === "addresses") {
       data.push({
         type: "Address",
@@ -234,276 +231,39 @@ const Extract = () => {
             <Tabs defaultValue="emails" className="mb-6" onValueChange={setActiveTab}>
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="emails" className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" /> Email Extraction
+                  Email Extraction
                 </TabsTrigger>
                 <TabsTrigger value="scraper" className="flex items-center gap-2">
-                  <Code className="h-4 w-4" /> Web Scraper
+                  Web Scraper
                 </TabsTrigger>
               </TabsList>
               
               <TabsContent value="emails">
-                <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                      <label htmlFor="url-extract" className="block text-sm font-medium mb-2">
-                        Website URL or LinkedIn Company Page
-                      </label>
-                      <div className="flex">
-                        <div className="relative flex-1">
-                          <Input
-                            id="url-extract"
-                            type="url"
-                            placeholder="https://company.com"
-                            value={url}
-                            onChange={(e) => setUrl(e.target.value)}
-                            className="pr-10"
-                            disabled={loading}
-                            aria-label="Extraction URL"
-                          />
-                          <Link className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
-                        </div>
-                        <Button
-                          type="submit"
-                          disabled={loading || !url || usageRemaining <= 0}
-                          className={`ml-2 transition-all ${loading ? "animate-pulse" : ""}`}
-                        >
-                          {loading ? (
-                            <>
-                              <Loader className="mr-2 h-4 w-4 animate-spin" />
-                              Extracting...
-                            </>
-                          ) : (
-                            <>
-                              <Search className="mr-2 h-4 w-4" />
-                              Extract Emails
-                            </>
-                          )}
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="text-sm text-muted-foreground">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          Extractions remaining today: <span className="font-semibold">{usageRemaining}/100</span>
-                        </div>
-                        {extractedEmails.length > 0 && (
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={handleDownload}
-                            className="flex items-center gap-2"
-                          >
-                            <Download className="h-4 w-4" />
-                            Download CSV
-                          </Button>
-                        )}
-                      </div>
-                      {usageRemaining === 0 && (
-                        <p className="text-destructive mt-1">
-                          You've reached your daily limit. Upgrade to continue.
-                        </p>
-                      )}
-                    </div>
-
-                    {loading && (
-                      <div className="space-y-2">
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-email-primary rounded-full transition-all duration-300 ease-in-out" 
-                            style={{ width: `${loadingProgress}%` }}
-                          ></div>
-                        </div>
-                        <p className="text-xs text-muted-foreground text-right">
-                          Extracting {loadingProgress < 100 ? "..." : `${extractedEmails.length} emails`}
-                        </p>
-                      </div>
-                    )}
-
-                    {extractedEmails.length > 0 && (
-                      <Card>
-                        <CardContent className="p-0">
-                          <div className="max-h-96 overflow-auto">
-                            <Table>
-                              <TableHeader className="sticky top-0 bg-card">
-                                <TableRow>
-                                  <TableHead>Email</TableHead>
-                                  <TableHead>Name</TableHead>
-                                  <TableHead>Position</TableHead>
-                                  <TableHead>Department</TableHead>
-                                </TableRow>
-                              </TableHeader>
-                              <TableBody>
-                                {extractedEmails.map((email, index) => (
-                                  <TableRow key={index}>
-                                    <TableCell className="font-medium">{email.email}</TableCell>
-                                    <TableCell>{email.name}</TableCell>
-                                    <TableCell>{email.position}</TableCell>
-                                    <TableCell>{email.department}</TableCell>
-                                  </TableRow>
-                                ))}
-                              </TableBody>
-                            </Table>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    )}
-                  </form>
-                </div>
+                <ExtractEmailsForm
+                  url={url}
+                  setUrl={setUrl}
+                  loading={loading}
+                  loadingProgress={loadingProgress}
+                  usageRemaining={usageRemaining}
+                  extractedEmails={extractedEmails}
+                  handleSubmit={handleSubmit}
+                  handleDownload={handleDownload}
+                />
               </TabsContent>
               
               <TabsContent value="scraper">
-                <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="space-y-4">
-                      <div>
-                        <label htmlFor="url-scrape" className="block text-sm font-medium mb-2">
-                          Website URL to Scrape
-                        </label>
-                        <div className="flex">
-                          <div className="relative flex-1">
-                            <Input
-                              id="url-scrape"
-                              type="url"
-                              placeholder="https://example.com"
-                              value={url}
-                              onChange={(e) => setUrl(e.target.value)}
-                              className="pr-10"
-                              disabled={loading}
-                              aria-label="Scraping URL"
-                            />
-                            <Globe className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
-                          </div>
-                          <Button
-                            type="submit"
-                            disabled={loading || !url || usageRemaining <= 0}
-                            className={`ml-2 transition-all ${loading ? "animate-pulse" : ""}`}
-                          >
-                            {loading ? (
-                              <>
-                                <Loader className="mr-2 h-4 w-4 animate-spin" />
-                                Scraping...
-                              </>
-                            ) : (
-                              <>
-                                <Code className="mr-2 h-4 w-4" />
-                                Scrape Data
-                              </>
-                            )}
-                          </Button>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium mb-2">What to Extract</label>
-                        <div className="flex flex-wrap gap-2">
-                          <Button 
-                            type="button" 
-                            variant={scrapeTarget === "all" ? "default" : "outline"} 
-                            size="sm"
-                            onClick={() => setScrapeTarget("all")}
-                          >
-                            All Data
-                          </Button>
-                          <Button 
-                            type="button" 
-                            variant={scrapeTarget === "emails" ? "default" : "outline"} 
-                            size="sm"
-                            onClick={() => setScrapeTarget("emails")}
-                          >
-                            Emails
-                          </Button>
-                          <Button 
-                            type="button" 
-                            variant={scrapeTarget === "links" ? "default" : "outline"} 
-                            size="sm"
-                            onClick={() => setScrapeTarget("links")}
-                          >
-                            Links
-                          </Button>
-                          <Button 
-                            type="button" 
-                            variant={scrapeTarget === "phones" ? "default" : "outline"} 
-                            size="sm"
-                            onClick={() => setScrapeTarget("phones")}
-                          >
-                            Phone Numbers
-                          </Button>
-                          <Button 
-                            type="button" 
-                            variant={scrapeTarget === "addresses" ? "default" : "outline"} 
-                            size="sm"
-                            onClick={() => setScrapeTarget("addresses")}
-                          >
-                            Addresses
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-sm text-muted-foreground">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          Scraping operations remaining today: <span className="font-semibold">{usageRemaining}/100</span>
-                        </div>
-                        {scrapedData.length > 0 && (
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={handleDownload}
-                            className="flex items-center gap-2"
-                          >
-                            <Download className="h-4 w-4" />
-                            Download CSV
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-
-                    {loading && (
-                      <div className="space-y-2">
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-email-primary rounded-full transition-all duration-300 ease-in-out" 
-                            style={{ width: `${loadingProgress}%` }}
-                          ></div>
-                        </div>
-                        <p className="text-xs text-muted-foreground text-right">
-                          Scanning webpage and extracting data {loadingProgress < 100 ? "..." : "complete"}
-                        </p>
-                      </div>
-                    )}
-
-                    {scrapedData.length > 0 && (
-                      <Card>
-                        <CardContent className="p-0">
-                          <div className="max-h-96 overflow-auto">
-                            <Table>
-                              <TableHeader className="sticky top-0 bg-card">
-                                <TableRow>
-                                  <TableHead>Type</TableHead>
-                                  <TableHead>Value</TableHead>
-                                  <TableHead>Context</TableHead>
-                                  <TableHead>Page</TableHead>
-                                </TableRow>
-                              </TableHeader>
-                              <TableBody>
-                                {scrapedData.map((item, index) => (
-                                  <TableRow key={index}>
-                                    <TableCell className="font-medium">{item.type}</TableCell>
-                                    <TableCell>{item.value}</TableCell>
-                                    <TableCell>{item.context || "-"}</TableCell>
-                                    <TableCell>{item.page || "-"}</TableCell>
-                                  </TableRow>
-                                ))}
-                              </TableBody>
-                            </Table>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    )}
-                  </form>
-                </div>
+                <ExtractScraperForm
+                  url={url}
+                  setUrl={setUrl}
+                  loading={loading}
+                  loadingProgress={loadingProgress}
+                  usageRemaining={usageRemaining}
+                  handleSubmit={handleSubmit}
+                  scrapedData={scrapedData}
+                  handleDownload={handleDownload}
+                  scrapeTarget={scrapeTarget}
+                  setScrapeTarget={setScrapeTarget}
+                />
               </TabsContent>
             </Tabs>
 
