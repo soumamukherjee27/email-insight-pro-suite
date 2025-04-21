@@ -10,7 +10,7 @@ const Navbar = () => {
         <div className="flex items-center">
           <Link to="/" className="flex items-center gap-2">
             <span className="text-xl font-bold gradient-text">
-              Email Tool powered by AI from BackBencher Club
+              BackBench Mail <span className="text-sm font-semibold pl-3 text-muted-foreground">by BackBencher Club</span>
             </span>
           </Link>
         </div>

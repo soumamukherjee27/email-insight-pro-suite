@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -21,8 +20,7 @@ const Index = () => {
                   Supercharge Your <span className="gradient-text">Email Workflow</span>
                 </h1>
                 <p className="text-xl text-muted-foreground">
-                  Verify, compose, track, and analyze emails with our all-in-one platform.
-                  Perfect for professionals and teams.
+                  Verify, compose, track, and analyze emails with <b>BackBench Mail</b>. Perfect for professionals and teams — now powered by the BackBencher Club community.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button size="lg" asChild>
