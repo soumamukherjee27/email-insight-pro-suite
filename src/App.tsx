@@ -3,38 +3,57 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import Verify from "./pages/Verify";
-import Compose from "./pages/Compose";
-import IPLookup from "./pages/IPLookup";
-import NotFound from "./pages/NotFound";
-import Track from "./pages/Track";
-import Extract from "./pages/Extract";
-import Community from "./pages/Community";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import React, { Suspense, lazy } from "react";
 
-const queryClient = new QueryClient();
+// Eager load critical pages
+import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
+
+// Lazy load non-critical pages to improve performance
+const Verify = lazy(() => import("./pages/Verify"));
+const Compose = lazy(() => import("./pages/Compose"));
+const IPLookup = lazy(() => import("./pages/IPLookup"));
+const Track = lazy(() => import("./pages/Track"));
+const Extract = lazy(() => import("./pages/Extract"));
+const Community = lazy(() => import("./pages/Community"));
+
+// Create a new query client with better caching options
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/verify" element={<Verify />} />
-          <Route path="/compose" element={<Compose />} />
-          <Route path="/lookup" element={<IPLookup />} />
-          <Route path="/track" element={<Track />} />
-          <Route path="/extract" element={<Extract />} />
-          <Route path="/community" element={<Community />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Suspense fallback={<div className="p-8 text-center">Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/verify" element={<Verify />} />
+              <Route path="/compose" element={<Compose />} />
+              <Route path="/lookup" element={<IPLookup />} />
+              <Route path="/track" element={<Track />} />
+              <Route path="/extract" element={<Extract />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/signin" element={<div className="p-8 text-center">Sign In Page (Coming Soon)</div>} />
+              <Route path="/signup" element={<div className="p-8 text-center">Sign Up Page (Coming Soon)</div>} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </React.StrictMode>
 );
 
 export default App;
