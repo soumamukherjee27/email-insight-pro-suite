@@ -11,6 +11,7 @@ import IPLookup from "./pages/IPLookup";
 import NotFound from "./pages/NotFound";
 import Track from "./pages/Track";
 import Extract from "./pages/Extract";
+import Community from "./pages/Community";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/lookup" element={<IPLookup />} />
           <Route path="/track" element={<Track />} />
           <Route path="/extract" element={<Extract />} />
+          <Route path="/community" element={<Community />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -9,10 +9,11 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between p-4">
         <div className="flex items-center">
           <Link to="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold gradient-text">Email Insight Pro</span>
+            <span className="text-xl font-bold gradient-text">
+              Email Tool powered by AI from BackBencher Club
+            </span>
           </Link>
         </div>
-        
         <nav className="hidden md:flex items-center space-x-1">
           <Link to="/verify" className="px-3 py-2 rounded-md text-sm hover:bg-secondary">
             Verify
@@ -29,8 +30,10 @@ const Navbar = () => {
           <Link to="/extract" className="px-3 py-2 rounded-md text-sm hover:bg-secondary">
             Extract
           </Link>
+          <Link to="/community" className="px-3 py-2 rounded-md text-sm hover:bg-orange-100 font-semibold text-orange-700">
+            Community
+          </Link>
         </nav>
-        
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm">
             Sign In

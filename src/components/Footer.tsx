@@ -8,13 +8,13 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-lg font-semibold mb-4">Email Insight Pro</h3>
+            <h3 className="text-lg font-semibold mb-4">Email Tool powered by AI from BackBencher Club</h3>
             <p className="text-sm text-muted-foreground">
-              Comprehensive email tools for professionals.
-              Verify, compose, track, and analyze emails with ease.
+              Comprehensive email tools for professionals. <br />
+              Verify, compose, track, and analyze emails with ease. <br />
+              Powered by the BackBencher AI community ❤️.
             </p>
           </div>
-          
           <div>
             <h3 className="text-sm font-semibold mb-4">Features</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -25,9 +25,16 @@ const Footer = () => {
               <li><Link to="/extract" className="hover:text-foreground">Email Extraction</Link></li>
             </ul>
           </div>
-          
           <div>
-            <h3 className="text-sm font-semibold mb-4">Company</h3>
+            <h3 className="text-sm font-semibold mb-4">Community</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>
+                <Link to="/community" className="hover:text-foreground font-semibold text-orange-700">
+                  BackBencher Club
+                </Link>
+              </li>
+            </ul>
+            <h3 className="text-sm font-semibold mb-4 mt-6">Company</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/about" className="hover:text-foreground">About Us</Link></li>
               <li><Link to="/pricing" className="hover:text-foreground">Pricing</Link></li>
@@ -35,7 +42,6 @@ const Footer = () => {
               <li><Link to="/blog" className="hover:text-foreground">Blog</Link></li>
             </ul>
           </div>
-          
           <div>
             <h3 className="text-sm font-semibold mb-4">Legal</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -45,10 +51,9 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Email Insight Pro. All rights reserved.
+            © {new Date().getFullYear()} Email Tool powered by AI from BackBencher Club. All rights reserved.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="text-muted-foreground hover:text-foreground">

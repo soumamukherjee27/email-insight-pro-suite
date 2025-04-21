@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +23,11 @@ const Extract = () => {
   const [usageRemaining, setUsageRemaining] = useState(100);
   const [loadingProgress, setLoadingProgress] = useState(0);
 
+  const getExtractionCount = () => {
+    const base = Math.floor(Math.random() * 21) + 30;
+    return Math.min(base, usageRemaining);
+  };
+
   const generateRandomEmails = (domain: string, count: number): ExtractedEmail[] => {
     const firstNames = ["John", "Jane", "Michael", "Emma", "David", "Sarah", "Robert", "Lisa", "Kevin", "Amy"];
     const lastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Garcia", "Rodriguez", "Wilson"];
@@ -37,7 +41,6 @@ const Extract = () => {
       const position = positions[Math.floor(Math.random() * positions.length)];
       const department = departments[Math.floor(Math.random() * departments.length)];
       
-      // Generate email with different formats
       let email;
       const format = Math.floor(Math.random() * 3);
       if (format === 0) {
@@ -77,12 +80,9 @@ const Extract = () => {
     setLoadingProgress(0);
     setExtractedEmails([]);
     
-    // Simulate domain extraction from URL
     let domain = url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('/')[0];
-    
-    // Simulate API call with progressive updates for more realistic UI
-    const extractionCount = Math.min(Math.floor(Math.random() * 20) + 30, usageRemaining); // Between 30-50, but limited by remaining usage
-    const totalTime = 3000; // 3 seconds for complete extraction
+    const extractionCount = getExtractionCount();
+    const totalTime = 3000;
     const interval = totalTime / 10;
     let progress = 0;
     
@@ -104,7 +104,6 @@ const Extract = () => {
   const handleDownload = () => {
     if (!extractedEmails.length) return;
     
-    // Create CSV content
     const csvHeader = "Email,Name,Position,Department,Source\n";
     const csvContent = extractedEmails.map(e => 
       `${e.email},"${e.name}","${e.position}","${e.department}","${e.source}"`
@@ -132,7 +131,8 @@ const Extract = () => {
             <div className="text-center mb-10">
               <h1 className="text-3xl font-bold mb-4">Email Extraction</h1>
               <p className="text-muted-foreground">
-                Find professional email addresses from company websites and LinkedIn profiles.
+                Find professional email addresses from company websites and LinkedIn profiles.<br />
+                <span className="font-semibold text-orange-800">Powered by BackBencher Club AI</span>
               </p>
             </div>
 
@@ -151,13 +151,15 @@ const Extract = () => {
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                         className="pr-10"
+                        disabled={loading}
+                        aria-label="Extraction URL"
                       />
-                      <Link className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                      <Link className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
                     </div>
                     <Button
                       type="submit"
                       disabled={loading || !url || usageRemaining <= 0}
-                      className="ml-2"
+                      className={`ml-2 transition-all ${loading ? "animate-pulse" : ""}`}
                     >
                       {loading ? (
                         <>
@@ -207,7 +209,7 @@ const Extract = () => {
                       ></div>
                     </div>
                     <p className="text-xs text-muted-foreground text-right">
-                      Extracted {Math.floor(loadingProgress / 100 * extractedEmails.length)} emails...
+                      Extracting {loadingProgress < 100 ? "..." : `${extractedEmails.length} emails`}
                     </p>
                   </div>
                 )}
@@ -297,7 +299,7 @@ const Extract = () => {
                 <p className="text-muted-foreground mb-4">
                   Upgrade to our Pro or Enterprise plan for higher extraction limits and advanced search features.
                 </p>
-                <Button>Upgrade Now</Button>
+                <Button className="hover-scale transition-transform">Upgrade Now</Button>
               </div>
             </div>
           </div>
