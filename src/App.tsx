@@ -9,6 +9,8 @@ import Verify from "./pages/Verify";
 import Compose from "./pages/Compose";
 import IPLookup from "./pages/IPLookup";
 import NotFound from "./pages/NotFound";
+import Track from "./pages/Track";
+import Extract from "./pages/Extract";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +25,8 @@ const App = () => (
           <Route path="/verify" element={<Verify />} />
           <Route path="/compose" element={<Compose />} />
           <Route path="/lookup" element={<IPLookup />} />
+          <Route path="/track" element={<Track />} />
+          <Route path="/extract" element={<Extract />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
