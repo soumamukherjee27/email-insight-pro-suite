@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Search, Link, FileText, Loader, Download, Globe, Code, MapPin } from "lucide-react";
+import { Search, Link, FileText, Loader, Download, Globe, Code, MapPin, Mail } from "lucide-react";
 import { toast } from "sonner";
 
 interface ExtractedEmail {
