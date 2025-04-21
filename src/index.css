@@ -5,104 +5,154 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 10%;         /* Black */
+    --foreground: 0 0% 100%;        /* White */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 15%;               /* Slightly lighter black */
+    --card-foreground: 0 0% 100%;   /* White */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 14%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 140 60% 40%;         /* Green */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 100%;         /* White */
+    --secondary-foreground: 140 60% 40%; /* Green text on white bg */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 25%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 140 60% 30%;          /* Deep green accent */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 90% 38%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --border: 140 60% 30%;          /* Deep green border */
+    --input: 0 0% 25%;
+    --ring: 140 60% 45%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
+    --background: 0 0% 10%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 15%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 14%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 140 60% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 140 60% 45%;
+    --muted: 0 0% 25%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 140 60% 35%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 90% 38%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 140 60% 30%;
+    --input: 0 0% 25%;
+    --ring: 140 60% 45%;
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans transition-colors duration-300;
   }
 }
 
-/* Import Inter font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-/* Custom components */
 @layer components {
   .feature-card {
-    @apply relative p-6 rounded-lg border border-border bg-card transition-all duration-300 hover:shadow-md;
+    @apply relative p-6 rounded-lg border border-border bg-gradient-to-br from-card via-[#173D1E] to-[#1B3627] transition-all duration-300 hover:scale-105 shadow-lg;
   }
-  
+
   .feature-icon {
-    @apply mb-4 p-3 rounded-lg bg-email-accent text-email-primary;
+    @apply mb-4 p-3 rounded-lg bg-primary text-white shadow-md;
   }
-  
+
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-email-primary to-email-secondary;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
   }
-  
+
   .pricing-card {
-    @apply relative p-6 rounded-lg border border-border bg-card transition-all duration-300 hover:shadow-md;
+    @apply relative p-6 rounded-lg border border-border bg-gradient-to-tl from-card from-60% to-accent transition-all duration-300 hover:shadow-xl hover:scale-105;
   }
-  
-  .pricing-card-popular {
-    @apply relative p-6 rounded-lg border-2 border-email-secondary bg-card shadow-lg;
+
+  .btn-interactive {
+    @apply transition-transform duration-150 hover:scale-105 hover:bg-primary hover:text-primary-foreground;
   }
-  
-  .plan-feature {
-    @apply flex items-center gap-2 text-sm;
+
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl;
   }
+}
+
+@layer utilities {
+  .hover-underline {
+    position: relative;
+    cursor: pointer;
+  }
+  .hover-underline::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0; right: 0; bottom: -2px;
+    height: 2px;
+    background: linear-gradient(90deg, #16a34a, #bbf7d0);
+    opacity: 0;
+    transform: scaleX(0);
+    transition: 0.3s;
+  }
+  .hover-underline:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #16a34a); /* Green Glow */
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #10b981aa); /* Green Glow */
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+  @apply glass;
+}
+
+.read-the-docs {
+  color: #bbf7d0;
 }
