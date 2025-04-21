@@ -17,6 +17,8 @@ const IPLookup = lazy(() => import("./pages/IPLookup"));
 const Track = lazy(() => import("./pages/Track"));
 const Extract = lazy(() => import("./pages/Extract"));
 const Community = lazy(() => import("./pages/Community"));
+const SignIn = lazy(() => import("./pages/SignIn"));
+const SignUp = lazy(() => import("./pages/SignUp"));
 
 // Create a new query client with better caching options
 const queryClient = new QueryClient({
@@ -45,8 +47,8 @@ const App = () => (
               <Route path="/track" element={<Track />} />
               <Route path="/extract" element={<Extract />} />
               <Route path="/community" element={<Community />} />
-              <Route path="/signin" element={<div className="p-8 text-center">Sign In Page (Coming Soon)</div>} />
-              <Route path="/signup" element={<div className="p-8 text-center">Sign Up Page (Coming Soon)</div>} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
