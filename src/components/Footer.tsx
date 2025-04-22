@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -8,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-lg font-semibold mb-4">BackBench Mail <span className="text-sm font-semibold text-muted-foreground">by BackBencher Club</span></h3>
+            <h3 className="text-lg font-semibold mb-4">BB Mail <span className="text-sm font-semibold text-muted-foreground">by BackBencher Club</span></h3>
             <p className="text-sm text-muted-foreground">
               Comprehensive email tools for professionals. <br />
               Verify, compose, track, and analyze emails with ease. <br />
@@ -53,7 +52,7 @@ const Footer = () => {
         </div>
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} BackBench Mail by BackBencher Club. All rights reserved.
+            © {new Date().getFullYear()} BB Mail by BackBencher Club. All rights reserved.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="text-muted-foreground hover:text-foreground">

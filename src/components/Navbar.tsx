@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -17,7 +16,7 @@ const Navbar = () => {
         <div className="flex flex-col items-start">
           <Link to="/" className="flex flex-col gap-1">
             <span className="text-2xl font-bold gradient-text">
-              BackBench Mail
+              BB Mail
             </span>
             <span className="text-sm font-medium text-muted-foreground">
               by BackBencher Club
