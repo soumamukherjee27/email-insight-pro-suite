@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Check, Mail, FileText, MapPin, BellRing, Code } from "lucide-react";
+import { Check, Mail, FileText, MapPin, BellRing, Code, ShieldCheck, Globe } from "lucide-react";
 
 const Index = () => {
   return (

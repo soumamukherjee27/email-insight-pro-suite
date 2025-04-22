@@ -1,65 +1,27 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 10%;         /* Black */
-    --foreground: 0 0% 100%;        /* White */
-
-    --card: 0 0% 15%;               /* Slightly lighter black */
-    --card-foreground: 0 0% 100%;   /* White */
-
-    --popover: 0 0% 14%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 140 60% 40%;         /* Green */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 0% 100%;         /* White */
-    --secondary-foreground: 140 60% 40%; /* Green text on white bg */
-
-    --muted: 0 0% 25%;
-    --muted-foreground: 0 0% 70%;
-
-    --accent: 140 60% 30%;          /* Deep green accent */
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 90% 38%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 140 60% 30%;          /* Deep green border */
-    --input: 0 0% 25%;
-    --ring: 140 60% 45%;
-
-    --radius: 1rem;
-  }
-
-  .dark {
-    --background: 0 0% 10%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 15%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 14%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 140 60% 45%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 100%;
-    --secondary-foreground: 140 60% 45%;
-    --muted: 0 0% 25%;
-    --muted-foreground: 0 0% 70%;
-    --accent: 140 60% 35%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 90% 38%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 140 60% 30%;
-    --input: 0 0% 25%;
-    --ring: 140 60% 45%;
+    --background: 240 4.8% 95.9%; /* Grey background */
+    --foreground: 0 0% 98%; /* White text */
+    --card: 240 4.8% 90%; /* Slightly darker grey for cards */
+    --card-foreground: 0 0% 98%; /* White text on cards */
+    --primary: 140 60% 40%; /* Green primary color */
+    --primary-foreground: 0 0% 100%; /* White text on primary */
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 140 60% 40%; /* Green text on secondary */
+    --muted: 240 4.8% 90%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 140 60% 30%; /* Darker green for accents */
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 140 60% 45%; /* Green ring color */
   }
 
   body {
-    @apply bg-background text-foreground font-sans transition-colors duration-300;
+    @apply bg-background text-foreground antialiased;
   }
 }
 
@@ -67,7 +29,11 @@
 
 @layer components {
   .feature-card {
-    @apply relative p-6 rounded-lg border border-border bg-gradient-to-br from-card via-[#173D1E] to-[#1B3627] transition-all duration-300 hover:scale-105 shadow-lg;
+    @apply relative p-6 rounded-lg border border-border bg-gradient-to-br from-card via-[#F0F0F0] to-[#E6E6E6] transition-all duration-300 hover:scale-105 shadow-lg;
+  }
+
+  .pricing-card {
+    @apply relative p-6 rounded-lg border border-border bg-gradient-to-tl from-card from-60% to-primary/10 transition-all duration-300 hover:shadow-xl hover:scale-105;
   }
 
   .feature-icon {
@@ -76,10 +42,6 @@
 
   .gradient-text {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
-  }
-
-  .pricing-card {
-    @apply relative p-6 rounded-lg border border-border bg-gradient-to-tl from-card from-60% to-accent transition-all duration-300 hover:shadow-xl hover:scale-105;
   }
 
   .btn-interactive {
